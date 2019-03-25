@@ -3,6 +3,14 @@
   "name": "RCR",
   "description": "React, Chrome, and Redux example",
   "version": "0.0.0.1",
+  "permissions": [
+    "contextMenus",
+    "identity",
+    "tabs",
+    "storage",
+    "http://*/*",
+    "https://*/*"
+  ],
   "background": {
     "scripts": [
       "event.js"
