@@ -103,6 +103,28 @@ class SendEth extends Component {
         chrome.extension.getBackgroundPage().console.log('render');
         chrome.extension.getBackgroundPage().console.log(user, this.state.options);
 
+        const button = this.state.address === 'empty' ? (
+            <div/>
+        ) : (
+            <button>
+                <Link to={
+                    {
+                        pathname: '/confirm_tx',
+                        state: {
+                            user_id : this.state.to.value,
+                            user_label : this.state.to.label,
+                            amount: this.state.eth_value,
+                            hasWallet: this.state.hasWallet,
+                        }
+                    }
+                }
+                      style={{display: 'block', height: '100%'}}
+                >
+                    Create Eth address
+                </Link>
+            </button>
+        );
+
         return (
             <div style={{overflow: 'hidden', width: '300px', height: '500px'}}>
                 <ReactSelect options={this.state.options} updateTo={this.handelUpdateTo}/>
@@ -121,24 +143,8 @@ class SendEth extends Component {
 
                 <div>
                     <p>Eth amount</p>
-                    <input value={this.state.eth_value} onChange={this.handleChange}/>
-                    <button>
-                        <Link to={
-                            {
-                                pathname: '/confirm_tx',
-                                state: {
-                                    user_id : this.state.to.value,
-                                    user_label : this.state.to.label,
-                                    amount: this.state.eth_value,
-                                    hasWallet: this.state.hasWallet,
-                                }
-                            }
-                        }
-                              style={{display: 'block', height: '100%'}}
-                        >
-                            Create Eth address
-                        </Link>
-                    </button>
+                    <input type={'number'} value={this.state.eth_value} onChange={this.handleChange}/>
+                    {button}
                 </div>
             </div>
         );
@@ -147,7 +153,6 @@ class SendEth extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        count: state.count,
         token: state.token,
         user: state.user,
     };

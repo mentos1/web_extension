@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import ImageAvatar from './ImageAvatar';
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 class HomePage extends Component {
     constructor(props) {
@@ -19,9 +19,7 @@ class HomePage extends Component {
     async componentDidMount() {
         //5A0A15040AB2C28FD3C062A0D6B20DA591CF61536387295603AC742D98AB7E69
         chrome.extension.getBackgroundPage().console.log('this.props.user', this.props.user);
-        if (!this.props.user || !this.props.user.address){
-            await this.getUser();
-        }
+        await this.getUser();
     }
 
     async getUser() {
@@ -39,7 +37,19 @@ class HomePage extends Component {
         });
 
 
+        chrome.extension.getBackgroundPage().console.log('response', response);
+
+        if (response.ok === false && response.status === 304 ) {
+            this.props.dispatch({
+                type: 'SET_USER',
+                text: null
+            });
+            return;
+
+        }
+
         response = await response.json();
+        chrome.extension.getBackgroundPage().console.log('response json', response.json);
 
         this.props.dispatch({
             type: 'SET_USER',
@@ -110,7 +120,7 @@ class HomePage extends Component {
         chrome.extension.getBackgroundPage().console.log(user);
 
         return (
-             (user) ? (
+            (user) ? (
                 <div style={{overflow: 'hidden', width: '200px'}}>
                     {/*Click Count: {this.props.count}
                 {this.state.txt}*/}
@@ -126,23 +136,22 @@ class HomePage extends Component {
                         </div>
                     </div>
                     <div>
-                        <input value={user.address}/>
+                        <input value={user.address} placeholder="0xe72a..." defaultValue="empty"/>
                         <button>
                             <Link to={'/send_eth'} style={{display: 'block', height: '100%'}}>Send</Link>
                         </button>
 
                     </div>
                 </div>
-             ) : (
-                 <div/>
-             )
+            ) : (
+                <div/>
+            )
         );
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        count: state.count,
         token: state.token,
         user: state.user,
     };

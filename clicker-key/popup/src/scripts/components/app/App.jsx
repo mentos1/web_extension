@@ -50,9 +50,9 @@ class App extends Component {
 
         response = await response.json();
 
-        chrome.extension.getBackgroundPage().console.log('______response_______');
+        chrome.extension.getBackgroundPage().console.log('______response__1_____');
         chrome.extension.getBackgroundPage().console.log(response);
-        chrome.extension.getBackgroundPage().console.log('______response_______');
+        chrome.extension.getBackgroundPage().console.log('______response__2_____');
 
         this.props.dispatch({
             type: 'SET_USER',
@@ -102,9 +102,7 @@ class App extends Component {
                     )
 
             ) : (
-                <div>
-                    Click Count: {this.props.count}
-                    {this.state.txt}
+                <div style={{overflow: 'hidden', width: '200px', height: '200px'}}>
                     <div>
                         <button onClick={this.handelClick}>
                             twitter
@@ -118,7 +116,6 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        count: state.count,
         token: state.token,
         user: state.user,
     };

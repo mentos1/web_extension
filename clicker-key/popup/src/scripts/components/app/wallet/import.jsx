@@ -72,7 +72,6 @@ class ImportWallet extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        count: state.count,
         token: state.token,
     };
 };

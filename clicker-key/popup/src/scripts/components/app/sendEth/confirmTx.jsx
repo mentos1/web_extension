@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import ImageAvatar from '../ImageAvatar';
-import ReactSelect from './ReactSelect'
-import {Link} from "react-router-dom";
+
 
 class confirmTx extends Component {
     constructor(props) {
@@ -84,7 +82,6 @@ class confirmTx extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        count: state.count,
         token: state.token,
         user: state.user,
     };

@@ -82,7 +82,6 @@ class CreateWallet extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        count: state.count,
         token: state.token,
     };
 };
