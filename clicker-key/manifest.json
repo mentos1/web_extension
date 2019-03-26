@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "RCR",
-  "description": "React, Chrome, and Redux example",
+  "name": "Twitter",
+  "description": "Twitter wallet",
   "version": "0.0.0.1",
   "permissions": [
     "contextMenus",
@@ -18,7 +18,7 @@
     "persistent": true
   },
   "browser_action": {
-    "default_title": "RCR Example",
+    "default_title": "Twitter wallet",
     "default_popup": "popup.html"
   },
   "content_scripts": [
@@ -27,5 +27,8 @@
       "css": [],
       "js": ["content.js"]
     }
-  ]
+  ],
+  "icons": {
+    "48": "icon_1.png"
+  }
 }

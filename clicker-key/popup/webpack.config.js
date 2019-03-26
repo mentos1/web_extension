@@ -16,7 +16,9 @@ module.exports = {
     extensions: ['.js', '.jsx', '.scss', '.json'],
     modules: ['node_modules']
   },
-
+  node: {
+      fs: 'empty'
+  },
   module: {
     loaders: [
       {

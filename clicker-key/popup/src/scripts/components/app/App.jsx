@@ -4,6 +4,7 @@ import io from 'socket.io-client'
 import { API_URL } from './config'
 const socket = io(API_URL);
 import { Redirect } from 'react-router'
+import crypto from 'crypto.js'
 
 class App extends Component {
 
@@ -76,16 +77,18 @@ class App extends Component {
             chrome.extension.getBackgroundPage().console.log(url_string);
             alert(url_string);
         });*/
-        chrome.extension.getBackgroundPage().console.log(socket, socket.id);
+
+       let rand = crypto.rand(64);
+        chrome.extension.getBackgroundPage().console.log('rand', rand);
 
         this.props.dispatch({
             type: 'SET_TOKEN',
-            text: socket.id
+            text: rand
         });
 
-        chrome.identity.launchWebAuthFlow({url: `https://wallet.primecore.io/twitter/?socketId=${socket.id}`, interactive: true}, function (url_string) {
+        chrome.identity.launchWebAuthFlow({url: `https://wallet.primecore.io/twitter/?socketId=${rand}`, interactive: true}, function (url_string) {
             chrome.extension.getBackgroundPage().console.log(url_string);
-            alert(url_string);
+            //alert(url_string);
         });
 
 

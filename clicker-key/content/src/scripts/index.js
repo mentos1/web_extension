@@ -15,7 +15,7 @@ document.body.insertBefore(anchor, document.body.childNodes[0]);
 proxyStore.ready().then(() => {
   render(
     <Provider store={proxyStore}>
-      <App/>
+      //<App/>
     </Provider>
    , document.getElementById('rcr-anchor'));
 });
