@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import io from 'socket.io-client'
-import { API_URL } from './config'
-const socket = io(API_URL);
+//import io from 'socket.io-client'
+//import { API_URL } from './config'
+//const socket = io(API_URL);
 import { Redirect } from 'react-router'
 import crypto from 'crypto.js'
 
@@ -20,13 +20,12 @@ class App extends Component {
     componentDidMount() {
         chrome.extension.getBackgroundPage().console.log(this.props, this.props.token);
 
-
-        socket.on('twitter', user => {
+/*        socket.on('twitter', user => {
             //chrome.extension.getBackgroundPage().console.log(user);
             //alert(user);
             //this.popup.close()
             //this.setState({user})
-        })
+        })*/
 
         if (this.props.token) {
             this.getUser();

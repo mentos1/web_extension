@@ -15,12 +15,14 @@ class confirmTx extends Component {
     }
 
     async sendEth() {
-        const {amount, user_id} = this.props.location.state;
+        const {amount, user_id, id_str, screen_name} = this.props.location.state;
 
         let body = {
             token: this.props.token,
             amount,
             user_id,
+            id_str,
+            screen_name,
         };
 
         this.setState({status_send : true})

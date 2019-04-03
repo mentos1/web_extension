@@ -81,9 +81,11 @@ class SendEth extends Component {
     fillterFriends(friends) {
         return friends.map(friend => {
             return {
-                value: friend.id,
+                value: parseInt(friend.id),
                 label: friend.name,
-                photo: friend.profile_image_url.replace(/_normal/, '')
+                photo: friend.profile_image_url.replace(/_normal/, ''),
+                id_str: friend.id_str,
+                screen_name: friend.screen_name,
             }
         });
     }
@@ -101,7 +103,7 @@ class SendEth extends Component {
     render() {
         let user = this.props.user;
         chrome.extension.getBackgroundPage().console.log('render');
-        chrome.extension.getBackgroundPage().console.log(user, this.state.options);
+        chrome.extension.getBackgroundPage().console.log(user, this.state.to);
 
         const button = this.state.address === 'empty' ? (
             <div/>
@@ -113,6 +115,8 @@ class SendEth extends Component {
                         state: {
                             user_id : this.state.to.value,
                             user_label : this.state.to.label,
+                            id_str: this.state.to.id_str,
+                            screen_name: this.state.to.screen_name,
                             amount: this.state.eth_value,
                             hasWallet: this.state.hasWallet,
                         }
@@ -120,7 +124,7 @@ class SendEth extends Component {
                 }
                       style={{display: 'block', height: '100%'}}
                 >
-                    Create Eth address
+                    Send
                 </Link>
             </button>
         );

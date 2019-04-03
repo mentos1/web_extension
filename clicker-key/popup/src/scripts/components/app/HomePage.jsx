@@ -11,9 +11,9 @@ class HomePage extends Component {
             pk: ""
         };
 
-        this.handelCreateClick = this.handelCreateClick.bind(this);
-        this.handelCreateByPkClick = this.handelCreateByPkClick.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
+        this.getUser = this.getUser.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
     async componentDidMount() {
@@ -39,7 +39,7 @@ class HomePage extends Component {
 
         chrome.extension.getBackgroundPage().console.log('response', response);
 
-        if (response.ok === false && response.status === 304 ) {
+        if (response.ok === false && response.status === 304) {
             this.props.dispatch({
                 type: 'SET_USER',
                 text: null
@@ -57,63 +57,31 @@ class HomePage extends Component {
         });
     }
 
+    async logout() {
 
-    /*    async handelClick() {
-            let response = await  fetch('https://wallet.primecore.io/auth/twitter/reverse',
-                {
-                    method: "POST"
-                }
-            );
-
-
-            let data = await response.json();
-            //chrome.extension.getBackgroundPage().console.log(data);
-
-            chrome.identity.launchWebAuthFlow({url: `https://api.twitter.com/oauth/authenticate?oauth_token=${data.oauth_token}`, interactive: true}, function (url_string) {
-                alert(url_string);
-                chrome.extension.getBackgroundPage().console.log(url_string);
-            });
-
-        }*/
-
-    async handelCreateClick() {
         let body = {
             token: this.props.token,
         };
 
-        let response = await fetch('https://wallet.primecore.io/wallet_create', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
+        chrome.identity.launchWebAuthFlow({url: `https://twitter.com/logout`, interactive: true}, function (url_string) {
+            chrome.extension.getBackgroundPage().console.log(url_string);
+            //alert(url_string);
         });
-        chrome.extension.getBackgroundPage().console.log(response);
-    }
 
-    async handelCreateByPkClick(event) {
-        event.preventDefault();
-
-        let body = {
-            token: this.props.token,
-            pk: this.state.pk
-        };
-
-        let response = await fetch('https://wallet.primecore.io/wallet_create_by_pk', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
+        this.props.dispatch({
+            type: 'SET_USER',
+            text: null
         });
-        chrome.extension.getBackgroundPage().console.log(response);
+
+        this.props.dispatch({
+            type: 'SET_TOKEN',
+            text: null
+        });
+
+        window.close();
+
     }
 
-    handleChange(event) {
-        this.setState({pk: event.target.value});
-    }
 
     render() {
         let user = this.props.user;
@@ -139,6 +107,9 @@ class HomePage extends Component {
                         <input value={user.address} placeholder="0xe72a..." defaultValue="empty"/>
                         <button>
                             <Link to={'/send_eth'} style={{display: 'block', height: '100%'}}>Send</Link>
+                        </button>
+                        <button onClick={this.logout}>
+                            Logout
                         </button>
 
                     </div>
